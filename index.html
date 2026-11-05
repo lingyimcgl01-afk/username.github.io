@@ -1,0 +1,852 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#183c32">
+    <title>生日快乐，李汪函</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --forest: #183c32;
+            --deep: #102b25;
+            --paper: #f4f6ed;
+            --ink: #182a25;
+            --muted: #64736a;
+            --coral: #ff755d;
+            --lime: #d7ed79;
+            --sky: #b9d9e9;
+            font-family: "Microsoft YaHei", "Noto Sans SC", sans-serif;
+            font-synthesis: none;
+            text-rendering: optimizeLegibility;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-width: 320px;
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+        }
+
+        button {
+            font: inherit;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        .cover {
+            min-height: 100svh;
+            padding: 28px clamp(22px, 6vw, 88px) 42px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            color: #fffdf5;
+            background: var(--forest) radial-gradient(#ffffff20 1px, transparent 1px) 0 0 / 19px 19px;
+        }
+
+        .cover__top,
+        .cover__bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            font-size: 13px;
+        }
+
+        .cover__top span:last-child,
+        .cover__bottom span:last-child {
+            color: var(--lime);
+        }
+
+        .cover__content {
+            width: min(1120px, 100%);
+            margin: 60px auto;
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(230px, .75fr);
+            align-items: center;
+            gap: 50px;
+        }
+
+        .eyebrow {
+            margin: 0 0 20px;
+            color: var(--coral);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        h1,
+        h2,
+        p {
+            margin-top: 0;
+        }
+
+        .cover h1 {
+            max-width: 720px;
+            margin-bottom: 22px;
+            font: 500 76px/1.18 Georgia, "Noto Serif SC", "Songti SC", serif;
+        }
+
+        .cover h1 em {
+            color: var(--lime);
+            font-style: normal;
+        }
+
+        .cover__message {
+            max-width: 440px;
+            margin-bottom: 26px;
+            color: #d4dfd5;
+            font-size: 17px;
+            line-height: 1.9;
+        }
+
+        .gift-art {
+            position: relative;
+            width: min(100%, 340px);
+            aspect-ratio: 1;
+            margin: auto;
+            display: grid;
+            place-items: center;
+            border: 1px solid #ffffff70;
+            background: var(--coral);
+            color: var(--deep);
+            transform: rotate(3deg);
+        }
+
+        .gift-art::before,
+        .gift-art::after {
+            position: absolute;
+            content: "";
+            background: var(--lime);
+        }
+
+        .gift-art::before {
+            top: 24%;
+            width: 100%;
+            height: 18px;
+        }
+
+        .gift-art::after {
+            left: calc(50% - 9px);
+            width: 18px;
+            height: 100%;
+        }
+
+        .gift-art__number {
+            z-index: 1;
+            padding: 14px 18px;
+            border: 1px solid var(--deep);
+            background: var(--coral);
+            font: 58px/1 Georgia, serif;
+        }
+
+        .open-button,
+        .game__action {
+            min-height: 50px;
+            padding: 0 19px;
+            border: 0;
+            background: var(--lime);
+            color: var(--deep);
+            font-weight: 700;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .open-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 18px;
+            transition: transform 180ms ease, background 180ms ease;
+        }
+
+        .open-button:hover {
+            transform: translateY(-3px);
+            background: #e5f79a;
+        }
+
+        .open-button span {
+            font-size: 20px;
+        }
+
+        .cover__hint {
+            margin: 12px 0 0;
+            color: #c1d0c4;
+            font-size: 12px;
+        }
+
+        main {
+            padding: 88px clamp(22px, 6vw, 88px) 42px;
+        }
+
+        .content {
+            width: min(1080px, 100%);
+            margin: 0 auto;
+        }
+
+        .intro {
+            max-width: 670px;
+            margin-bottom: 70px;
+        }
+
+        .intro h2,
+        .section-heading h2 {
+            margin-bottom: 16px;
+            font: 500 46px/1.25 Georgia, "Noto Serif SC", "Songti SC", serif;
+        }
+
+        .intro p:last-child,
+        .section-heading p:last-child {
+            margin-bottom: 0;
+            color: var(--muted);
+            line-height: 1.9;
+        }
+
+        .section {
+            padding-bottom: 82px;
+        }
+
+        .section-heading {
+            margin-bottom: 25px;
+        }
+
+        .section-heading h2 {
+            font-size: 38px;
+        }
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 13px;
+        }
+
+        .memory {
+            overflow: hidden;
+            border: 1px solid #1c342b;
+            background: #fffdf7;
+        }
+
+        .memory__photo {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            display: block;
+            object-fit: cover;
+            background: #e7e9d8;
+        }
+
+        .memory__body {
+            min-height: 146px;
+            padding: 16px 17px 19px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .memory__number {
+            color: var(--muted);
+            font: 13px Georgia, serif;
+        }
+
+        .memory h3 {
+            margin: auto 0 7px;
+            font-size: 18px;
+        }
+
+        .memory p {
+            margin: 0;
+            color: #40534a;
+            font-size: 14px;
+            line-height: 1.75;
+        }
+
+        .notes {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .note {
+            min-height: 185px;
+            padding: 23px;
+            border-top: 3px solid var(--coral);
+            background: #fffdf7;
+        }
+
+        .note:nth-child(2) {
+            border-color: #7098a7;
+        }
+
+        .note:nth-child(3) {
+            border-color: #9baa4f;
+        }
+
+        .note blockquote {
+            margin: 0 0 23px;
+            font: 17px/1.75 Georgia, "Noto Sans SC", serif;
+        }
+
+        .note p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .game {
+            padding: 34px clamp(22px, 5vw, 54px);
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(260px, .8fr);
+            align-items: center;
+            gap: 30px;
+            background: #e6eee0;
+        }
+
+        .game h2 {
+            margin-bottom: 12px;
+            font: 500 34px/1.3 Georgia, "Noto Serif SC", "Songti SC", serif;
+        }
+
+        .game__copy {
+            max-width: 470px;
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .game__play {
+            display: grid;
+            justify-items: center;
+            gap: 12px;
+        }
+
+        .cake {
+            position: relative;
+            width: min(280px, 100%);
+            height: 190px;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .cake__candles {
+            position: absolute;
+            z-index: 2;
+            top: 12px;
+            left: 50%;
+            width: 210px;
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            justify-items: center;
+            row-gap: 3px;
+            transform: translateX(-50%);
+        }
+
+        .candle {
+            position: relative;
+            width: 8px;
+            height: 26px;
+            border: 1px solid #fffdf7;
+            background: var(--coral);
+        }
+
+        .candle:nth-child(3n) {
+            background: #7195a2;
+        }
+
+        .candle::before {
+            position: absolute;
+            top: -9px;
+            left: 1px;
+            width: 6px;
+            height: 8px;
+            border-radius: 50% 50% 50% 0;
+            background: #ffcb55;
+            content: "";
+            transform: rotate(-45deg);
+            box-shadow: 0 0 10px #ffcb5570;
+        }
+
+        .cake.is-out .candle::before {
+            display: none;
+        }
+
+        .cake__body {
+            position: absolute;
+            right: 12px;
+            bottom: 8px;
+            left: 12px;
+            height: 82px;
+            border: 1px solid #6f4437;
+            border-radius: 12px 12px 18px 18px;
+            background: #d98b69;
+            box-shadow: inset 0 -12px #bd6f55;
+        }
+
+        .cake__icing {
+            position: absolute;
+            right: 12px;
+            bottom: 72px;
+            left: 12px;
+            height: 30px;
+            border: 1px solid #6f4437;
+            border-radius: 50%;
+            background: #fff0d6;
+        }
+
+        .game__status,
+        .fortune-result {
+            min-height: 24px;
+            margin: 0;
+            color: var(--ink);
+            font-size: 14px;
+            line-height: 1.7;
+            text-align: center;
+        }
+
+        .game__action {
+            min-height: 44px;
+            background: var(--forest);
+            color: #fffdf5;
+        }
+
+        .fortune-result {
+            max-width: 290px;
+            color: var(--forest);
+            font-weight: 700;
+        }
+
+        .surprise {
+            padding: clamp(26px, 5vw, 54px);
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 28px;
+            background: var(--forest);
+            color: #fffdf5;
+        }
+
+        .surprise h2 {
+            margin-bottom: 12px;
+            font: 500 34px/1.3 Georgia, "Noto Serif SC", "Songti SC", serif;
+        }
+
+        .surprise__intro {
+            max-width: 570px;
+            margin: 0;
+            color: #d4dfd5;
+            line-height: 1.8;
+        }
+
+        .surprise__button {
+            min-height: 48px;
+            padding: 0 17px;
+            border: 1px solid var(--lime);
+            background: transparent;
+            color: var(--lime);
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .surprise__button:hover {
+            background: var(--lime);
+            color: var(--deep);
+        }
+
+        .surprise__reveal {
+            grid-column: 1 / -1;
+            padding-top: 22px;
+            border-top: 1px solid #ffffff50;
+            color: var(--lime);
+            font-size: 18px;
+            line-height: 1.9;
+        }
+
+        .footer {
+            padding-top: 28px;
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .fireworks {
+            position: fixed;
+            z-index: 20;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        @media (max-width: 900px) {
+            .cover__content {
+                grid-template-columns: minmax(0, 1fr) minmax(190px, .7fr);
+                gap: 28px;
+            }
+
+            .cover h1 {
+                font-size: 60px;
+            }
+
+            .memory-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 680px) {
+            .cover {
+                padding-top: 22px;
+            }
+
+            .cover__content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                margin: 42px auto;
+            }
+
+            .cover h1 {
+                font-size: 50px;
+            }
+
+            .gift-art {
+                width: min(54vw, 210px);
+            }
+
+            .gift-art__number {
+                font-size: 42px;
+            }
+
+            main {
+                padding-top: 62px;
+            }
+
+            .intro {
+                margin-bottom: 54px;
+            }
+
+            .intro h2,
+            .section-heading h2 {
+                font-size: 35px;
+            }
+
+            .notes,
+            .game,
+            .surprise {
+                grid-template-columns: 1fr;
+            }
+
+            .game {
+                gap: 20px;
+            }
+
+            .note {
+                min-height: auto;
+            }
+
+            .surprise__button {
+                justify-self: start;
+            }
+        }
+
+        @media (max-width: 420px) {
+
+            .cover__top,
+            .cover__bottom {
+                font-size: 11px;
+            }
+
+            .cover h1 {
+                font-size: 44px;
+            }
+
+            .memory-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .memory__photo {
+                aspect-ratio: 4 / 3;
+            }
+
+            .footer {
+                flex-direction: column;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="cover" aria-labelledby="cover-title">
+        <div class="cover__top"><span>一份只属于今天的礼物</span><span>生日快乐 · 11 / 08</span></div>
+        <div class="cover__content">
+            <div>
+                <p class="eyebrow">SPECIAL DELIVERY / FOR YOU</p>
+                <h1 id="cover-title">生日快乐，<br><em>李汪函</em></h1>
+                <p class="cover__message">今天你是主角，愿新的一岁，有开心的事，喜欢的人，还有轻松快乐的日子。</p>
+                <button class="open-button" id="open-gift" type="button" aria-expanded="false"
+                    aria-controls="birthday-content">拆开礼物 <span aria-hidden="true">↘</span></button>
+                <p class="cover__hint">里面装着一些想对你说的话</p>
+            </div>
+            <div class="gift-art" aria-hidden="true"><span class="gift-art__number">HBD</span></div>
+        </div>
+        <div class="cover__bottom"><span>今天请尽情收下所有祝福</span><span>SCROLL TO OPEN</span></div>
+    </section>
+
+    <canvas class="fireworks" id="fireworks" aria-hidden="true"></canvas>
+
+    <main id="birthday-content" hidden>
+        <div class="content">
+            <header class="intro">
+                <p class="eyebrow">A LITTLE ALBUM OF US</p>
+                <h2 id="main-title" tabindex="-1">有些日子，<br>因为有你才特别。</h2>
+                <p>把一起经历过的小事收好，等想念的时候，再慢慢翻出来看。</p>
+            </header>
+
+            <section class="section" aria-labelledby="memory-title">
+                <div class="section-heading">
+                    <p class="eyebrow">01 / THE GOOD DAYS</p>
+                    <h2 id="memory-title">我们的回忆</h2>
+                    <p>那些一起走过的日子，都值得好好收藏。</p>
+                </div>
+                <div class="memory-grid">
+                    <article class="memory">
+                        <img class="memory__photo" src="birthday.jpg" alt="生日主角开心大笑的照片" loading="lazy">
+                        <div class="memory__body"><span class="memory__number">MEMORY 01</span>
+                            <h3>笑这么开心 o O</h3>
+                            <p>！？早些时候？！</p>
+                        </div>
+                    </article>
+                    <article class="memory">
+                        <img class="memory__photo" src="birthday1.jpg" alt="兄弟在教室里的合影" loading="lazy">
+                        <div class="memory__body"><span class="memory__number">MEMORY 02</span>
+                            <h3>茄子:D</h3>
+                            <p>!耶!</p>
+                        </div>
+                    </article>
+                    <article class="memory">
+                        <img class="memory__photo" src="birthday2.jpg" alt="兄弟们的正式合照" loading="lazy">
+                        <div class="memory__body"><span class="memory__number">MEMORY 03</span>
+                            <h3>至尊合照</h3>
+                            <p>这是我们的~~</p>
+                        </div>
+                    </article>
+                    <article class="memory">
+                        <img class="memory__photo" src="birthday3.jpg" alt="大丰山的日出与山峦" loading="lazy">
+                        <div class="memory__body"><span class="memory__number">MEMORY 04</span>
+                            <h3>！？征战大丰山？！</h3>
+                            <p>我们是不是累了一路还半路烤火取暖？ XD</p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="notes-title">
+                <div class="section-heading">
+                    <p class="eyebrow">02 / NOTES FOR YOU</p>
+                    <h2 id="notes-title">兄弟们想说的话</h2>
+                </div>
+                <div class="notes">
+                    <article class="note">
+                        <blockquote>愿你新的一岁，常常遇见喜欢的事，也常常被温柔对待！</blockquote>
+                        <p>兄弟 A</p>
+                    </article>
+                    <article class="note">
+                        <blockquote>谢谢你一直以来的陪伴。生日快乐，我们下次见面再好好庆祝！</blockquote>
+                        <p>兄弟 B</p>
+                    </article>
+                    <article class="note">
+                        <blockquote>希望今天的蛋糕很甜，往后的每一天也都值得期待！</blockquote>
+                        <p>兄弟 C</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section game" aria-labelledby="game-title">
+                <div>
+                    <p class="eyebrow">03 / MAKE A WISH</p>
+                    <h2 id="game-title">点亮蜡烛，许个愿吧。</h2>
+                    <p class="game__copy">先点一下蛋糕插上 16 根蜡烛，再点一下吹灭它们。愿望放心里，然后抽一支今日运势签。</p>
+                </div>
+                <div class="game__play">
+                    <button class="cake" id="cake-button" type="button" aria-label="点击蛋糕插上16根蜡烛">
+                        <span class="cake__candles" id="cake-candles" aria-hidden="true"></span>
+                        <span class="cake__icing" aria-hidden="true"></span>
+                        <span class="cake__body" aria-hidden="true"></span>
+                    </button>
+                    <p class="game__status" id="cake-status" aria-live="polite">点一下蛋糕，插上 16 根蜡烛。</p>
+                    <button class="game__action" id="wish-button" type="button" hidden>我许好愿了</button>
+                    <button class="game__action" id="fortune-button" type="button" hidden>抽今日运势</button>
+                    <p class="fortune-result" id="fortune-result" aria-live="polite" hidden></p>
+                </div>
+            </section>
+
+            <section class="section surprise" aria-labelledby="surprise-title">
+                <div>
+                    <p class="eyebrow">04 / ONE LAST THING</p>
+                    <h2 id="surprise-title">最后，还有一句话。</h2>
+                    <p class="surprise__intro">给最讲义气的兄弟，留一段认真的话。</p>
+                </div>
+                <button class="surprise__button" id="reveal-surprise" type="button" aria-expanded="false"
+                    aria-controls="surprise-message">揭开惊喜</button>
+                <p class="surprise__reveal" id="surprise-message" tabindex="-1" hidden>
+                    我们很庆幸人生中遇到了你，你是一个讲义气的人，会把很多话放在心里，作为兄弟我们很多话都可以慢慢说，时间充裕，我们以后还有很多的路可以走，当下就算有不顺心的事情，但我们只要向前看，还有很多人和事在等着我们去认识与探索，有人曾说过，人生近看悲剧，远看喜剧，我们都有无限可能！
+                </p>
+            </section>
+
+            <footer class="footer"><span>为你认真准备的一份小礼物</span><span>生日快乐，明年也要一起庆祝。</span></footer>
+        </div>
+    </main>
+
+    <script>
+        const openGift = document.querySelector("#open-gift");
+        const birthdayContent = document.querySelector("#birthday-content");
+        const mainTitle = document.querySelector("#main-title");
+        const revealButton = document.querySelector("#reveal-surprise");
+        const surpriseMessage = document.querySelector("#surprise-message");
+        const cakeButton = document.querySelector("#cake-button");
+        const cakeCandles = document.querySelector("#cake-candles");
+        const cakeStatus = document.querySelector("#cake-status");
+        const wishButton = document.querySelector("#wish-button");
+        const fortuneButton = document.querySelector("#fortune-button");
+        const fortuneResult = document.querySelector("#fortune-result");
+        const fireworksCanvas = document.querySelector("#fireworks");
+        let cakeStage = 0;
+
+        openGift.addEventListener("click", () => {
+            birthdayContent.hidden = false;
+            openGift.setAttribute("aria-expanded", "true");
+            mainTitle.focus({ preventScroll: true });
+            birthdayContent.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        cakeButton.addEventListener("click", () => {
+            if (cakeStage === 0) {
+                cakeCandles.replaceChildren(...Array.from({ length: 16 }, () => {
+                    const candle = document.createElement("span");
+                    candle.className = "candle";
+                    return candle;
+                }));
+                cakeStage = 1;
+                cakeButton.setAttribute("aria-label", "点击蛋糕吹灭蜡烛并许愿");
+                cakeStatus.textContent = "16 根蜡烛点亮了！再点一下，吹灭蜡烛许个愿。";
+                return;
+            }
+
+            cakeButton.classList.add("is-out");
+            cakeButton.disabled = true;
+            cakeButton.setAttribute("aria-label", "蜡烛已吹灭");
+            cakeStage = 2;
+            cakeStatus.textContent = "蜡烛吹灭啦！把愿望放在心里。";
+            wishButton.hidden = false;
+        });
+
+        wishButton.addEventListener("click", () => {
+            wishButton.hidden = true;
+            cakeStatus.textContent = "愿望已收好，来抽一支今日运势吧。";
+            fortuneButton.hidden = false;
+        });
+
+        fortuneButton.addEventListener("click", () => {
+            const fortunes = [
+                "今日运势：好运正在路上，记得给自己一点耐心。",
+                "今日运势：适合和兄弟见面，快乐会加倍。",
+                "今日运势：小小惊喜即将出现，保持好心情。",
+                "今日运势：做喜欢的事，灵感和好运都会来。",
+                "今日运势：今天宜大笑，烦恼暂时靠边站。",
+                "今日运势：你的愿望正在悄悄靠近。"
+            ];
+            fortuneResult.textContent = fortunes[Math.floor(Math.random() * fortunes.length)];
+            fortuneResult.hidden = false;
+            fortuneButton.textContent = "再抽一次";
+        });
+
+        revealButton.addEventListener("click", () => {
+            surpriseMessage.hidden = false;
+            revealButton.setAttribute("aria-expanded", "true");
+            revealButton.textContent = "惊喜已揭晓";
+            surpriseMessage.focus({ preventScroll: true });
+            launchFireworks();
+        });
+
+        function launchFireworks() {
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+            const context = fireworksCanvas.getContext("2d");
+            const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+            const particles = [];
+            const colors = ["#d7ed79", "#ff755d", "#b9d9e9", "#fff0d6", "#f6c85f"];
+            let frame = 0;
+
+            fireworksCanvas.width = window.innerWidth * pixelRatio;
+            fireworksCanvas.height = window.innerHeight * pixelRatio;
+            context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+
+            const burst = (x, y) => {
+                for (let index = 0; index < 54; index += 1) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = 1.2 + Math.random() * 4;
+                    particles.push({
+                        x,
+                        y,
+                        vx: Math.cos(angle) * speed,
+                        vy: Math.sin(angle) * speed,
+                        life: 45 + Math.random() * 30,
+                        color: colors[Math.floor(Math.random() * colors.length)]
+                    });
+                }
+            };
+
+            [[.2, .28], [.78, .24], [.5, .18], [.32, .42], [.7, .4]].forEach(([x, y], index) => {
+                window.setTimeout(() => burst(window.innerWidth * x, window.innerHeight * y), index * 260);
+            });
+
+            const draw = () => {
+                context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+                for (let index = particles.length - 1; index >= 0; index -= 1) {
+                    const particle = particles[index];
+                    particle.x += particle.vx;
+                    particle.y += particle.vy;
+                    particle.vy += .035;
+                    particle.life -= 1;
+                    context.globalAlpha = Math.max(particle.life / 75, 0);
+                    context.fillStyle = particle.color;
+                    context.beginPath();
+                    context.arc(particle.x, particle.y, 2.2, 0, Math.PI * 2);
+                    context.fill();
+                    if (particle.life <= 0) particles.splice(index, 1);
+                }
+                context.globalAlpha = 1;
+                frame += 1;
+                if (frame < 180) window.requestAnimationFrame(draw);
+                else context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            };
+
+            window.requestAnimationFrame(draw);
+        }
+    </script>
+</body>
+
+</html>
